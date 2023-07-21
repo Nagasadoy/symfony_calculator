@@ -36,16 +36,6 @@ class CalculatorFormType extends AbstractType
             ->add('addToQueue', SubmitType::class, ['label' => 'Добавить в очередь'])
             ->add('getFromQueue', SubmitType::class, ['label' => 'Выбрать из очереди']);
 
-//        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
-//            $data = $event->getData();
-//            if (array_key_exists('getFromQueue', $data)) {
-//                $form = $event->getForm();
-////                $form->getConfig()->get
-////                $form->remove('firstOperand');
-////                $form->remove('secondOperand');
-////                $form->remove('operation');
-//            }
-//        });
     }
 
     public function configureOptions(OptionsResolver $resolver): void
