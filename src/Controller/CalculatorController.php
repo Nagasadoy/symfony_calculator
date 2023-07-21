@@ -26,7 +26,7 @@ class CalculatorController extends AbstractController
 
             try {
                 $calculatorService = CalculateServiceFactory::create($operation);
-                $result = $calculatorService->getResult($firstOperand, $secondOperand);
+//                $result = $calculatorService->getResult($firstOperand, $secondOperand);
             } catch (\DomainException $exception) {
                 $this->addFlash('error', $exception->getMessage());
             }

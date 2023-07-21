@@ -19,4 +19,5 @@ readonly class CalculatorService
 
         return "$firstOperand {$this->operation->value} $secondOperand = $result";
     }
+
 }
