@@ -8,6 +8,9 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CalculatorFormType extends AbstractType
@@ -29,13 +32,32 @@ class CalculatorFormType extends AbstractType
                 'label' => 'Аругмент 2',
                 'invalid_message' => 'Введите число!',
             ])
-            ->add('calculate', SubmitType::class, ['label' => 'Вычислить']);
+            ->add('calculate', SubmitType::class, ['label' => 'Вычислить'])
+            ->add('addToQueue', SubmitType::class, ['label' => 'Добавить в очередь'])
+            ->add('getFromQueue', SubmitType::class, ['label' => 'Выбрать из очереди']);
+
+//        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
+//            $data = $event->getData();
+//            if (array_key_exists('getFromQueue', $data)) {
+//                $form = $event->getForm();
+////                $form->getConfig()->get
+////                $form->remove('firstOperand');
+////                $form->remove('secondOperand');
+////                $form->remove('operation');
+//            }
+//        });
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            // Configure your form options here
+            'validation_groups' => function (FormInterface $form) {
+                if ($form->get('getFromQueue')->isClicked()) {
+                    return [];
+                }
+
+                return ['Required'];
+            }
         ]);
     }
 

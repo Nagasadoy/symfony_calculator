@@ -3,41 +3,31 @@
 namespace App\Services\RabbitMq\Calculation;
 
 use App\Services\RabbitMq\RabbitMqClient;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class CalculationConsumer
 {
     public const EXCHANGE = 'calculation';
 
-    public function __construct(private readonly RabbitMqClient $rabbit)
+    public function __construct(private readonly RabbitMqClient $rabbit, private readonly SerializerInterface $serializer)
     {
     }
 
-    public function consume(): array
+    public function consume(): ?CalcualtionMessage
     {
-        $messages = [];
-
         $channel = $this->rabbit->getChannel();
         $channel->exchange_declare(self::EXCHANGE, 'fanout', auto_delete: false);
-        $channel->queue_declare('calculation');
+        $channel->queue_declare('calculation', auto_delete: false);
         $channel->queue_bind('calculation', self::EXCHANGE);
 
-        $callback = function ($msg) use ($messages){
-            $messages[] = $msg->body;
-        };
+        $message = $channel->basic_get('calculation', true);
 
-        $channel->basic_consume('calculation', '', false, true, false, false, $callback);
-
-        $x = $channel->callbacks;
-
-        while (count($channel->callbacks)) {
-            $channel->wait();
+        if ($message !== null) {
+            $message = $this->serializer->deserialize($message->body, CalcualtionMessage::class, 'json');
         }
 
-        $x = $messages;
-
-        $channel->close();
         $channel->getConnection()->close();
-
-        return $messages;
+        $channel->close();
+        return $message;
     }
 }

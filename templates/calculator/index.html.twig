@@ -16,6 +16,12 @@
                 <div class="col-lg-auto">
                     {{ form_row(form.calculate) }}
                 </div>
+                <div class="col-lg-auto">
+                    {{ form_row(form.addToQueue) }}
+                </div>
+                <div class="col-lg-auto">
+                    {{ form_row(form.getFromQueue) }}
+                </div>
             </div>
             {% if result %}
                 <div class="row alert alert-success">
@@ -24,6 +30,12 @@
             {% endif %}
             {% for message in app.flashes('error') %}
                 <div class="alert alert-danger" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+
+            {% for message in app.flashes('info') %}
+                <div class="alert alert-primary" role="alert">
                     {{ message }}
                 </div>
             {% endfor %}

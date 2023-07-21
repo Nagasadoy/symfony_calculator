@@ -17,7 +17,7 @@ class CalculationProducer
     {
         $channel = $this->rabbit->getChannel();
         $channel->exchange_declare(self::EXCHANGE, 'fanout', false, false, false);
-        $channel->queue_declare('calculation');
+        $channel->queue_declare('calculation', auto_delete: false);
         $channel->queue_bind('calculation', self::EXCHANGE);
 
         $msg = new AMQPMessage(json_encode($message));
