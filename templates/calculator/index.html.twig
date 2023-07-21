@@ -1,6 +1,6 @@
 {% extends "base.html.twig" %}
 {% block body %}
-    <div class="container-sm mt-5 bg-white">
+    <div class="container-sm mt-5 bg-white pb-1">
         {{ form_start(form) }}
             <h1>Калькулятор</h1>
             <div class="row align-items-center">
@@ -24,7 +24,7 @@
                 </div>
             </div>
             {% if result %}
-                <div class="row alert alert-success">
+                <div class="alert alert-success" role="alert">
                     {{ result }}
                 </div>
             {% endif %}

@@ -59,7 +59,7 @@ class CalculatorController extends AbstractController
         if ($getFromQueueSubmit) {
             $message = $this->consumer->consume();
             if ($message === null) {
-                $this->addFlash('info', 'Нет сообщений в очереди');
+                $this->addFlash('info', 'Нет выражений в очереди');
                 return null;
             }
 
