@@ -1,0 +1,32 @@
+{% extends "base.html.twig" %}
+{% block body %}
+    <div class="container-sm mt-5 bg-white">
+        {{ form_start(form) }}
+            <h1>Калькулятор</h1>
+            <div class="row align-items-center">
+                <div class="col-sm">
+                    {{ form_row(form.firstOperand) }}
+                </div>
+                <div class="col-1">
+                    {{ form_row(form.operation) }}
+                </div>
+                <div class="col-sm">
+                    {{ form_row(form.secondOperand) }}
+                </div>
+                <div class="col-lg-auto">
+                    {{ form_row(form.calculate) }}
+                </div>
+            </div>
+            {% if result %}
+                <div class="row alert alert-success">
+                    {{ result }}
+                </div>
+            {% endif %}
+            {% for message in app.flashes('error') %}
+                <div class="alert alert-danger" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
