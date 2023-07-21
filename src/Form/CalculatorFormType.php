@@ -22,12 +22,7 @@ class CalculatorFormType extends AbstractType
                 'invalid_message' => 'Введите число!',
             ])
             ->add('operation', ChoiceType::class, [
-                'choices' => [
-                    '+' => '+',
-                    '-' => '-',
-                    '/' => '/',
-                    '*' => '*',
-                ],
+                'choices' => $this->getOperationChoices(),
                 'label' => 'Операция'
             ])
             ->add('secondOperand', NumberType::class, [
@@ -44,4 +39,14 @@ class CalculatorFormType extends AbstractType
         ]);
     }
 
+    private function getOperationChoices(): array
+    {
+        $operationChoicesRaw = array_column(OperationsEnum::cases(), 'value');
+        $operationChoices = [];
+        foreach ($operationChoicesRaw as $choice) {
+            $operationChoices[$choice] = $choice;
+        }
+
+        return $operationChoices;
+    }
 }
