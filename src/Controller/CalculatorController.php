@@ -36,7 +36,7 @@ class CalculatorController extends AbstractController
 //            }
 //            $messengerService->sendToQueue($firstOperand, $secondOperand, $operation);
 
-            $consumer->consume();
+//            $messages = $consumer->consume();
 
             $producer->produce(new CalcualtionMessage($firstOperand, $secondOperand, $operation));
         }

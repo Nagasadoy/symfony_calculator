@@ -72,6 +72,8 @@ RUN docker-php-ext-configure gd --with-webp --with-jpeg \
 
 RUN docker-php-ext-install gd
 
+RUN docker-php-ext-install sockets
+
 
 # set working directory
 WORKDIR $APP_HOME

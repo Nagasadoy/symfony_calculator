@@ -12,25 +12,32 @@ class CalculationConsumer
     {
     }
 
-    public function consume(): void
+    public function consume(): array
     {
+        $messages = [];
+
         $channel = $this->rabbit->getChannel();
         $channel->exchange_declare(self::EXCHANGE, 'fanout', auto_delete: false);
-        [$queue_name, ,] = $channel->queue_declare('');
-        $channel->queue_bind($queue_name, self::EXCHANGE);
+        $channel->queue_declare('calculation');
+        $channel->queue_bind('calculation', self::EXCHANGE);
 
-        $callback = function ($msg) {
-            dd($msg);
-            echo ' [x] ', $msg->body, "\n";
+        $callback = function ($msg) use ($messages){
+            $messages[] = $msg->body;
         };
 
-        $channel->basic_consume($queue_name, '', false, true, false, false, $callback);
+        $channel->basic_consume('calculation', '', false, true, false, false, $callback);
 
-        while ($channel->is_open) {
+        $x = $channel->callbacks;
+
+        while (count($channel->callbacks)) {
             $channel->wait();
         }
 
+        $x = $messages;
+
         $channel->close();
-        $this->rabbit->getConnection()->close();
+        $channel->getConnection()->close();
+
+        return $messages;
     }
 }
