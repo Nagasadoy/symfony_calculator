@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Messenger\Calculation;
+namespace App\Services\RabbitMq\Calculation;
 
-readonly class Message
+readonly class CalcualtionMessage
 {
     public function __construct(
         public float $firstOperand,

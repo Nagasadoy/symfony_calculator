@@ -9,18 +9,18 @@ framework:
             # failed: 'doctrine://default?queue_name=failed'
             # sync: 'sync://'
 
-            async:
-                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
-                options:
-                    exchange:
-                        name: calculation_exchange
-                        type: fanout
-                    queues:
-                        calculation_queue: ~
-
-        routing:
-            # Route your messages to the transports
-             'App\Messenger\Calculation\Message': async
+#            async:
+#                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+#                options:
+#                    exchange:
+#                        name: calculation_exchange
+#                        type: fanout
+#                    queues:
+#                        calculation_queue: ~
+#
+#        routing:
+#            # Route your messages to the transports
+#             'App\Messenger\Calculation\CalcualtionMessage': async
 
 # when@test:
 #    framework:
