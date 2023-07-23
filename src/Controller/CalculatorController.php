@@ -6,7 +6,7 @@ use App\Form\CalculatorFormType;
 use App\Services\Calculator\CalculateServiceFactory;
 use App\Services\RabbitMq\Calculation\CalculationConsumer;
 use App\Services\RabbitMq\Calculation\CalculationProducer;
-use App\Services\RabbitMq\Calculation\CalcualtionMessage;
+use App\Services\RabbitMq\Calculation\CalculationMessage;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -48,7 +48,7 @@ class CalculatorController extends AbstractController
 
         if ($addToQueueSubmit) {
             try {
-                $this->producer->produce(new CalcualtionMessage($firstOperand, $secondOperand, $operation));
+                $this->producer->produce(new CalculationMessage($firstOperand, $secondOperand, $operation));
                 $this->addFlash('info', 'Выражение отправлено в очередь');
             } catch (\Throwable) {
                 $this->addFlash('error', 'Произошла ошибка при отправке выражения в очередь');

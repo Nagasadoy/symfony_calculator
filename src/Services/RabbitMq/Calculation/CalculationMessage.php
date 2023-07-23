@@ -2,7 +2,7 @@
 
 namespace App\Services\RabbitMq\Calculation;
 
-readonly class CalcualtionMessage
+readonly class CalculationMessage
 {
     public function __construct(
         public float $firstOperand,
