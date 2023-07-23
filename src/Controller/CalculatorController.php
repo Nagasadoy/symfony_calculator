@@ -49,7 +49,9 @@ class CalculatorController extends AbstractController
         if ($addToQueueSubmit) {
             try {
                 $this->producer->produce(new CalculationMessage($firstOperand, $secondOperand, $operation));
-                $this->addFlash('info', 'Выражение отправлено в очередь');
+                $this->addFlash('info',
+                    'Выражение: "' . "$firstOperand  $operation $secondOperand" . '"отправлено в очередь'
+                );
             } catch (\Throwable) {
                 $this->addFlash('error', 'Произошла ошибка при отправке выражения в очередь');
             }
